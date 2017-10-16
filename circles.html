@@ -165,27 +165,40 @@
 				color: '#2c3e50'
 			}
 		}
-
+		// create circles array
 		var circles = [];
-
+		// add function, when key pressed
 		function onKeyDown(event) {
+			// if key is appointed
 			if(keyData[event.key]){
+				// specify canvas size depend on window resolution
 				var maxPoint = new Point(view.size.width, view.size.height);
+				// add random number to random point
 				var randomPoint = Point.random();
+				// get number with bigger digits
 				var point = maxPoint * randomPoint;
-				var newCircle = new Path.Circle(point, 500);
+				// creating new circle
+				var newCircle = new Path.Circle(point, 500)
+				// take color for circle from keyData object
 				newCircle.fillColor = keyData[event.key].color;
+				// take sound for key from object
 				keyData[event.key].sound.play();
+				// add newCircle to circles array
 				circles.push(newCircle);
 			}
 		}
-
+		// add onFrame function: change color and size of circle
 		function onFrame(event){
-			for(var i = 0; i < circles.length; i++){
-				circles[i].fillColor.hue +=1;
-				circles[i].scale(.9);
-			}
-		}
+      for(var i = 0; i < circles.length; i++){
+        circles[i].scale(0.9);
+        circles[i].fillColor.hue += 1;
+        if(circles[i].area < 1){
+        	circles[i].remove();
+          circles.splice(i, 1);
+          console.log(circles);
+        }
+      }
+    }
 
 	</script>
 </head>
